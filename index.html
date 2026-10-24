@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>João Victor Monteiro | Analista de Dados</title>
+<meta name="description" content="Portfólio de analista de dados júnior: projetos em SQL, Power BI e Python, cada um com pergunta de negócio, método e resultado.">
+<meta property="og:title" content="João Victor Monteiro | Analista de Dados">
+<meta property="og:description" content="Projetos em SQL, Power BI e Python com pergunta de negócio, método e resultado.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231F4FD8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F5F8;
+    --ink: #111C2B;
+    --muted: #536074;
+    --line: #D3DAE4;
+    --accent: #1F4FD8;
+    --accent-ink: #FFFFFF;
+    --panel: #101B2C;
+    --panel-text: #E6ECF5;
+    --kw: #7FB0FF;
+    --str: #F2C879;
+    --mark: #FFE9A8;
+    --mark-ink: #111C2B;
+    --sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0D1521; --ink: #E6ECF5; --muted: #9AA8BC; --line: #25334A;
+      --accent: #7BA3FF; --accent-ink: #0D1521; --panel: #08101B; --mark: #5C4A12; --mark-ink: #FFF1C9;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D1521; --ink: #E6ECF5; --muted: #9AA8BC; --line: #25334A;
+    --accent: #7BA3FF; --accent-ink: #0D1521; --panel: #08101B; --mark: #5C4A12; --mark-ink: #FFF1C9;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Marcadores de campos que você precisa preencher. Remova antes de publicar. */
+  .todo { background: var(--mark); color: var(--mark-ink); padding: 0 .2em; border-radius: 2px; }
+
+  header.topo { border-bottom: 1px solid var(--line); }
+  header.topo .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1rem; padding-bottom: 1rem; flex-wrap: wrap; }
+  .marca { font-weight: 700; color: var(--ink); text-decoration: none; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
+  nav a:hover { color: var(--accent); }
+
+  .hero { padding: 3.5rem 0 4rem; }
+  .hero .wrap { display: grid; gap: 2.5rem; align-items: center; }
+  h1 {
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.25rem;
+    font-weight: 700;
+  }
+  .hero p.lead { font-size: 1.25rem; color: var(--muted); max-width: 34rem; margin: 0 0 1.75rem; }
+  .acoes { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .botao {
+    display: inline-block; padding: .7rem 1.2rem; border-radius: 6px; font-weight: 700;
+    text-decoration: none; border: 2px solid var(--accent);
+  }
+  .botao.primario { background: var(--accent); color: var(--accent-ink); }
+  .botao.primario:hover { filter: brightness(.9); }
+  .botao.secundario { color: var(--accent); background: transparent; }
+  .botao.secundario:hover { background: rgba(127,150,255,.14); }
+
+  figure.consulta { margin: 0; background: var(--panel); color: var(--panel-text); border-radius: 10px; overflow: hidden; }
+  figure.consulta pre { margin: 0; padding: 1.25rem 1.25rem .75rem; font-family: var(--mono); font-size: .9rem; line-height: 1.7; overflow-x: auto; }
+  .kw { color: var(--kw); }
+  .str { color: var(--str); }
+  .resultado { border-top: 1px solid rgba(230,236,245,.18); padding: .75rem 1.25rem 1.1rem; overflow-x: auto; }
+  .resultado table { border-collapse: collapse; font-family: var(--mono); font-size: .82rem; width: 100%; min-width: 26rem; }
+  .resultado th, .resultado td { text-align: left; padding: .3rem 1rem .3rem 0; white-space: nowrap; }
+  .resultado th { color: var(--kw); font-weight: 500; border-bottom: 1px solid rgba(230,236,245,.18); }
+  .resultado p { margin: .6rem 0 0; font-family: var(--mono); font-size: .78rem; color: rgba(230,236,245,.6); }
+
+  section { padding: 3.5rem 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.75rem; letter-spacing: -0.015em; margin: 0 0 .5rem; line-height: 1.2; }
+  .intro { color: var(--muted); max-width: 38rem; margin: 0 0 2.5rem; }
+
+  .projeto { display: grid; gap: 1.25rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+  .projeto:first-of-type { border-top: 0; padding-top: 0; }
+  .projeto h3 { font-size: 1.35rem; line-height: 1.25; margin: 0 0 .4rem; }
+  .ferramentas { margin: 0; color: var(--muted); font-size: .95rem; }
+  .projeto dl { margin: 0; display: grid; gap: 1rem; max-width: 40rem; }
+  .projeto dt { font-weight: 700; margin-bottom: .15rem; }
+  .projeto dd { margin: 0; }
+  .links { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 1.25rem; font-weight: 700; }
+  figure.print { margin: 1.5rem 0 0; }
+  figure.print img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; display: block; }
+
+  .habilidades { display: grid; gap: 0; max-width: 44rem; margin: 0; }
+  .habilidades div { display: grid; gap: .15rem; padding: 1rem 0; border-top: 1px solid var(--line); }
+  .habilidades div:first-child { border-top: 0; padding-top: 0; }
+  .habilidades dt { font-weight: 700; }
+  .habilidades dd { margin: 0; color: var(--muted); }
+
+  .sobre p { max-width: 38rem; margin: 0 0 1rem; }
+
+  .contato ul { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .5rem; font-size: 1.1rem; }
+
+
+  .aviso { display: inline-block; margin: 0 0 1rem; padding: .2rem .7rem; border: 1px solid var(--line); border-radius: 999px; font-size: .85rem; color: var(--muted); }
+  .filtros { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0 0 2rem; }
+  .filtros label { display: grid; gap: .25rem; font-weight: 500; font-size: .95rem; }
+  .filtros select { font: inherit; padding: .5rem .7rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); min-width: 10.5rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0 1.5rem; margin: 0 0 2.25rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .kpi { padding: 1rem 0; }
+  .kpi dt { color: var(--muted); font-size: .9rem; }
+  .kpi dd { margin: 0; }
+  .kpi .valor { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.3; }
+  .kpi .delta { font-size: .85rem; color: var(--muted); }
+  .graficos { display: grid; gap: 2.25rem; }
+  .bloco { min-width: 0; }
+  .bloco h3, .leitura-bloco h3, h3.sub { font-size: 1.05rem; margin: 0 0 .75rem; line-height: 1.3; }
+  h3.sub { margin-top: 2.5rem; }
+  .duplo { display: grid; gap: 2.25rem; }
+  svg.barras { display: block; width: 100%; height: auto; }
+  svg.barras text { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
+  svg.barras text.destaque { fill: var(--ink); font-weight: 700; }
+  svg.barras .eixo { stroke: var(--line); stroke-width: 1; }
+  svg.barras .barra { fill: var(--accent); opacity: .55; }
+  svg.barras .barra.max { opacity: 1; }
+  .lista-barras { list-style: none; margin: 0; padding: 0; display: grid; gap: .65rem; }
+  .lista-barras li { display: grid; grid-template-columns: 6.5rem minmax(3rem, 1fr) auto; gap: .75rem; align-items: center; font-size: .95rem; }
+  .trilho { height: .6rem; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .trilho span { display: block; height: 100%; background: var(--accent); }
+  .num { font-variant-numeric: tabular-nums; color: var(--muted); text-align: right; white-space: nowrap; font-size: .9rem; }
+  .leitura-bloco { margin-top: 2.25rem; }
+  .leitura { list-style: disc; margin: 0; padding-left: 1.2rem; display: grid; gap: .5rem; max-width: 44rem; }
+  .nota { color: var(--muted); font-size: .9rem; max-width: 44rem; margin: 1.5rem 0 0; }
+  @media (min-width: 52rem) {
+    .duplo { grid-template-columns: 1fr 1fr; }
+  }
+
+  footer { border-top: 1px solid var(--line); padding: 1.75rem 0 2.5rem; color: var(--muted); font-size: .9rem; }
+
+  @media (min-width: 52rem) {
+    .hero .wrap { grid-template-columns: 1.05fr 1fr; }
+    .projeto { grid-template-columns: 15rem 1fr; gap: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio">João Victor Monteiro</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#painel">Painel</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>João Victor Monteiro, analista de dados</h1>
+        <p class="lead">Formado em Análise e Desenvolvimento de Sistemas. Uso SQL, Power BI e Python para responder perguntas de negócio e explicar o resultado com clareza.</p>
+        <div class="acoes">
+          <a class="botao primario" href="#projetos">Ver projetos</a>
+          <a class="botao secundario" href="https://github.com/jv-monteiro">GitHub</a>
+        </div>
+      </div>
+
+      <figure class="consulta" aria-label="Consulta SQL que resume o perfil profissional">
+<pre><span class="kw">SELECT</span> nome, formacao, ferramentas
+<span class="kw">FROM</span> candidato
+<span class="kw">WHERE</span> disponivel = <span class="kw">TRUE</span>;</pre>
+        <div class="resultado">
+          <table>
+            <thead>
+              <tr><th>nome</th><th>formacao</th><th>ferramentas</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="str">João Victor Monteiro</span></td><td><span class="str">ADS</span></td><td><span class="str">SQL, Power BI, Python</span></td></tr>
+            </tbody>
+          </table>
+          <p>(1 linha)</p>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <section id="painel">
+    <div class="wrap">
+      <h2>Painel de vendas</h2>
+      <p class="aviso">Dados simulados</p>
+      <p class="intro">Uma demonstração de como organizo um painel: filtros no topo, indicadores resumidos, gráficos e uma leitura em texto do que mudou. Os dados são fictícios, gerados por um script para uma loja online imaginária, e não têm relação com nenhuma empresa real.</p>
+
+      <form class="filtros" onsubmit="return false">
+        <label for="f-periodo">Período
+          <select id="f-periodo">
+            <option value="3">Últimos 3 meses</option>
+            <option value="6">Últimos 6 meses</option>
+            <option value="12" selected>Últimos 12 meses</option>
+          </select>
+        </label>
+        <label for="f-categoria">Categoria <select id="f-categoria"></select></label>
+        <label for="f-estado">Estado <select id="f-estado"></select></label>
+      </form>
+
+      <dl class="kpis" aria-live="polite">
+        <div class="kpi"><dt>Receita</dt><dd class="valor" id="k-receita"></dd><dd class="delta" id="d-receita"></dd></div>
+        <div class="kpi"><dt>Pedidos entregues</dt><dd class="valor" id="k-pedidos"></dd><dd class="delta" id="d-pedidos"></dd></div>
+        <div class="kpi"><dt>Ticket médio</dt><dd class="valor" id="k-ticket"></dd><dd class="delta" id="d-ticket"></dd></div>
+        <div class="kpi"><dt>Cancelamentos</dt><dd class="valor" id="k-cancel"></dd><dd class="delta" id="d-cancel"></dd></div>
+      </dl>
+
+      <div class="graficos">
+        <div class="bloco">
+          <h3 id="t-mensal">Receita por mês</h3>
+          <svg id="g-mensal" class="barras" role="img" aria-labelledby="t-mensal" viewBox="0 0 640 260"></svg>
+        </div>
+        <div class="duplo">
+          <div class="bloco"><h3>Receita por categoria</h3><ul class="lista-barras" id="l-categoria"></ul></div>
+          <div class="bloco"><h3>Receita por estado</h3><ul class="lista-barras" id="l-estado"></ul></div>
+        </div>
+      </div>
+
+      <div class="leitura-bloco">
+        <h3>O que os dados mostram</h3>
+        <ul class="leitura" id="leitura"></ul>
+      </div>
+
+      <h3 class="sub">Como eu consultaria a receita mensal em SQL</h3>
+      <figure class="consulta" aria-label="Consulta SQL de receita mensal com variação sobre o mês anterior">
+<pre><span class="kw">WITH</span> receita_mensal <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> <span class="kw">DATE_TRUNC</span>(<span class="str">'month'</span>, data_pedido) <span class="kw">AS</span> mes,
+         <span class="kw">SUM</span>(valor) <span class="kw">AS</span> receita,
+         <span class="kw">COUNT</span>(*)   <span class="kw">AS</span> pedidos
+  <span class="kw">FROM</span> pedidos
+  <span class="kw">WHERE</span> status = <span class="str">'entregue'</span>
+  <span class="kw">GROUP BY</span> 1
+)
+<span class="kw">SELECT</span> mes, receita, pedidos,
+       <span class="kw">ROUND</span>(100.0 * (receita - <span class="kw">LAG</span>(receita) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> mes))
+             / <span class="kw">LAG</span>(receita) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> mes), 1) <span class="kw">AS</span> variacao_pct
+<span class="kw">FROM</span> receita_mensal
+<span class="kw">ORDER BY</span> mes;</pre>
+      </figure>
+      <p class="nota">Feito com HTML, CSS e JavaScript, sem biblioteca externa. O script usa uma semente fixa, então os números são sempre os mesmos. Os valores de receita consideram só pedidos entregues, e a taxa de cancelamento considera todos os pedidos do período.</p>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <h2>Projetos</h2>
+      <p class="intro">Cada projeto parte de uma pergunta de negócio e termina com uma recomendação. O código e a documentação completa estão no GitHub.</p>
+
+      <article class="projeto">
+        <header>
+          <h3>Dashboard de vendas de e-commerce</h3>
+          <p class="ferramentas">Power BI, Power Query, DAX</p>
+        </header>
+        <div>
+          <dl>
+            <div>
+              <dt>Pergunta de negócio</dt>
+              <dd>Quais categorias e estados concentram a receita, e em quais meses o faturamento cai?</dd>
+            </div>
+            <div>
+              <dt>O que fiz</dt>
+              <dd>Importei e limpei as tabelas de pedidos no Power Query, modelei fatos e dimensões com tabela calendário e criei medidas DAX de receita, ticket médio e variação sobre o ano anterior.</dd>
+            </div>
+            <div>
+              <dt>O que descobri</dt>
+              <dd><mark class="todo">PREENCHER: 2 ou 3 insights com números reais, por exemplo "X categorias geram Y% da receita".</mark></dd>
+            </div>
+          </dl>
+          <div class="links">
+            <a href="https://github.com/jv-monteiro/dashboard-vendas-powerbi">Repositório no GitHub</a>
+          </div>
+          <figure class="print">
+            <img src="assets/projeto-vendas.png" alt="Dashboard de vendas no Power BI com receita por categoria, estado e mês" onerror="this.closest('figure').hidden = true">
+          </figure>
+        </div>
+      </article>
+
+      <article class="projeto">
+        <header>
+          <h3>Entrega e satisfação do cliente</h3>
+          <p class="ferramentas">SQL, CTE, window functions</p>
+        </header>
+        <div>
+          <dl>
+            <div>
+              <dt>Pergunta de negócio</dt>
+              <dd>Os atrasos na entrega derrubam a nota de avaliação dos clientes, e em quais regiões isso é mais grave?</dd>
+            </div>
+            <div>
+              <dt>O que fiz</dt>
+              <dd>Cruzei pedidos, entregas e avaliações com JOINs, calculei o atraso em dias com CTEs e usei window functions para ranquear as regiões por impacto na nota.</dd>
+            </div>
+            <div>
+              <dt>O que descobri</dt>
+              <dd><mark class="todo">PREENCHER: resultado com números e a recomendação para o negócio.</mark></dd>
+            </div>
+          </dl>
+          <div class="links">
+            <a href="https://github.com/jv-monteiro/analise-entrega-sql">Repositório no GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="projeto">
+        <header>
+          <h3>Preço da gasolina entre estados</h3>
+          <p class="ferramentas">Python, pandas, matplotlib, seaborn</p>
+        </header>
+        <div>
+          <dl>
+            <div>
+              <dt>Pergunta de negócio</dt>
+              <dd>Como o preço da gasolina varia entre os estados e ao longo do tempo, e quais fatores explicam as maiores diferenças?</dd>
+            </div>
+            <div>
+              <dt>O que fiz</dt>
+              <dd>Limpei a série histórica de preços da ANP, tratei valores ausentes e datas, agrupei por estado e período e produzi gráficos com a leitura de cada um.</dd>
+            </div>
+            <div>
+              <dt>O que descobri</dt>
+              <dd><mark class="todo">PREENCHER: principais achados com números e limitações da análise.</mark></dd>
+            </div>
+          </dl>
+          <div class="links">
+            <a href="https://github.com/jv-monteiro/preco-gasolina-python">Notebook no GitHub</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="habilidades">
+    <div class="wrap">
+      <h2>Habilidades</h2>
+      <p class="intro">Cada ferramenta aparece com o projeto em que a usei.</p>
+      <dl class="habilidades">
+        <div><dt>SQL</dt><dd>JOIN, GROUP BY, CTE e window functions, aplicados em "Entrega e satisfação do cliente".</dd></div>
+        <div><dt>Power BI</dt><dd>Power Query, modelagem de dados, DAX básico e design de dashboard, em "Dashboard de vendas".</dd></div>
+        <div><dt>Python</dt><dd>pandas para limpeza e análise, matplotlib e seaborn para gráficos, em "Preço da gasolina".</dd></div>
+        <div><dt>Excel</dt><dd>Tabela dinâmica, XLOOKUP e fórmulas condicionais para análises rápidas.</dd></div>
+        <div><dt>Git e GitHub</dt><dd>Versionamento diário e documentação de cada projeto em README.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="sobre" class="sobre">
+    <div class="wrap">
+      <h2>Sobre</h2>
+      <p>Me formei em Análise e Desenvolvimento de Sistemas em 2026 e escolhi dados porque gosto de transformar uma pergunta vaga em uma resposta que alguém consegue usar para decidir.</p>
+      <p><mark class="todo">PREENCHER: 1 ou 2 frases sobre o que você busca (por exemplo, a área em que quer atuar) e o que te diferencia.</mark></p>
+    </div>
+  </section>
+
+  <section id="contato" class="contato">
+    <div class="wrap">
+      <h2>Contato</h2>
+      <p class="intro">Aberto a vagas de estágio e analista júnior.</p>
+      <ul>
+        <li>E-mail: <a href="mailto:joaovictormonteirolopes@gmail.com">joaovictormonteirolopes@gmail.com</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/jo%C3%A3o-victor-monteiro-700a002a7">linkedin.com/in/joão-victor-monteiro-700a002a7</a></li>
+        <li>GitHub: <a href="https://github.com/jv-monteiro">github.com/jv-monteiro</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Página feita com HTML e CSS e publicada no GitHub Pages.</div>
+</footer>
+
+<script>
+(function () {
+  var MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  var N_MESES = 24; // nov/2024 a out/2026
+
+  function semente(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var rand = semente(2026);
+
+  var CATEGORIAS = [
+    { nome: 'Eletrônicos', peso: 0.22, min: 180, max: 1800, cancela: 0.09 },
+    { nome: 'Moda', peso: 0.24, min: 40, max: 320, cancela: 0.07 },
+    { nome: 'Casa', peso: 0.20, min: 50, max: 600, cancela: 0.05 },
+    { nome: 'Beleza', peso: 0.14, min: 25, max: 180, cancela: 0.04 },
+    { nome: 'Esportes', peso: 0.12, min: 60, max: 500, cancela: 0.05 },
+    { nome: 'Livros', peso: 0.08, min: 20, max: 110, cancela: 0.03 }
+  ];
+  var ESTADOS = [
+    { nome: 'SP', peso: 0.38 }, { nome: 'RJ', peso: 0.17 }, { nome: 'MG', peso: 0.15 },
+    { nome: 'RS', peso: 0.10 }, { nome: 'PR', peso: 0.10 }, { nome: 'BA', peso: 0.10 }
+  ];
+  var PESOS_UF = ESTADOS.map(function (x) { return x.peso; });
+
+  function sorteia(lista, pesos) {
+    var total = pesos.reduce(function (a, b) { return a + b; }, 0);
+    var r = rand() * total, acc = 0;
+    for (var i = 0; i < lista.length; i++) {
+      acc += pesos[i];
+      if (r < acc) return lista[i];
+    }
+    return lista[lista.length - 1];
+  }
+
+  var pedidos = [];
+  for (var m = 0; m < N_MESES; m++) {
+    var mesCal = (10 + m) % 12;
+    var sazon = mesCal === 10 ? 1.3 : mesCal === 11 ? 1.5 : (mesCal === 0 || mesCal === 1) ? 0.85 : 1;
+    var qtd = Math.round(150 * (1 + 0.025 * m) * sazon * (0.95 + rand() * 0.1));
+    var pesosCat = CATEGORIAS.map(function (c) { return c.nome === 'Eletrônicos' && mesCal === 10 ? c.peso * 1.8 : c.peso; });
+    for (var k = 0; k < qtd; k++) {
+      var c = sorteia(CATEGORIAS, pesosCat);
+      var e = sorteia(ESTADOS, PESOS_UF);
+      var valor = c.min + (c.max - c.min) * Math.pow(rand(), 2.2);
+      pedidos.push({ mes: m, cat: c.nome, uf: e.nome, valor: Math.round(valor * 100) / 100, ok: rand() >= c.cancela });
+    }
+  }
+
+  var brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  function num(v, d) { return v.toLocaleString('pt-BR', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 }); }
+  function pct(v, d) { return num(v * 100, d) + '%'; }
+  function compacto(v) {
+    if (v >= 1e6) return 'R$ ' + num(v / 1e6, 1) + ' mi';
+    if (v >= 1e3) return 'R$ ' + num(v / 1e3, 1) + ' mil';
+    return 'R$ ' + Math.round(v);
+  }
+  function rotuloMes(i) {
+    var cal = (10 + i) % 12, ano = 2024 + Math.floor((10 + i) / 12);
+    return MESES[cal] + '/' + String(ano).slice(2);
+  }
+  function variacao(atual, anterior) { return anterior > 0 ? (atual - anterior) / anterior : null; }
+  function textoVar(v) {
+    if (v === null) return 'sem período anterior';
+    return (v >= 0 ? '+' : '−') + num(Math.abs(v) * 100, 1) + '% vs. período anterior';
+  }
+
+  function filtra(ini, fim, cat, uf) {
+    return pedidos.filter(function (p) {
+      return p.mes >= ini && p.mes <= fim && (cat === 'todas' || p.cat === cat) && (uf === 'todos' || p.uf === uf);
+    });
+  }
+  function resumo(lista) {
+    var rec = 0, ped = 0, canc = 0;
+    lista.forEach(function (p) { if (p.ok) { rec += p.valor; ped++; } else { canc++; } });
+    return { receita: rec, pedidos: ped, ticket: ped ? rec / ped : 0, cancel: lista.length ? canc / lista.length : 0, total: lista.length };
+  }
+  function agrupa(lista, chave) {
+    var mapa = {};
+    lista.forEach(function (p) { if (p.ok) mapa[p[chave]] = (mapa[p[chave]] || 0) + p.valor; });
+    return Object.keys(mapa).map(function (k) { return { nome: k, valor: mapa[k] }; })
+      .sort(function (a, b) { return b.valor - a.valor; });
+  }
+
+  function el(id) { return document.getElementById(id); }
+
+  function desenhaMensal(serie) {
+    var svg = el('g-mensal');
+    var W = Math.max(300, svg.parentNode.clientWidth || 640), H = 260;
+    var pl = W < 420 ? 64 : 76, pr = 10, pt = 14, pb = 30;
+    var max = Math.max.apply(null, serie.map(function (s) { return s.valor; }).concat([1]));
+    var bruto = max / 4, pot = Math.pow(10, Math.floor(Math.log10(bruto))), f = bruto / pot;
+    var passo = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * pot;
+    var topo = Math.ceil(max / passo) * passo;
+    var area = H - pt - pb, n = serie.length, banda = (W - pl - pr) / n;
+    var bw = Math.min(banda * 0.62, 44), saida = '';
+    var y = function (v) { return H - pb - (v / topo) * area; };
+
+    for (var v = 0; v <= topo + 1e-9; v += passo) {
+      saida += '<line class="eixo" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v) + '"></line>';
+      saida += '<text x="' + (pl - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + compacto(v) + '</text>';
+    }
+    var iMax = 0;
+    serie.forEach(function (s, i) { if (s.valor > serie[iMax].valor) iMax = i; });
+    var passoRotulo = banda < 38 ? 2 : 1;
+    serie.forEach(function (s, i) {
+      var x = pl + banda * i + (banda - bw) / 2, h = (s.valor / topo) * area, cx = x + bw / 2;
+      saida += '<rect class="barra' + (i === iMax ? ' max' : '') + '" x="' + x.toFixed(1) + '" y="' + (H - pb - h).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2"></rect>';
+      if (i % passoRotulo === 0) saida += '<text x="' + cx.toFixed(1) + '" y="' + (H - 10) + '" text-anchor="middle">' + s.rot + '</text>';
+      if (i === iMax) saida += '<text class="destaque" x="' + cx.toFixed(1) + '" y="' + (H - pb - h - 6).toFixed(1) + '" text-anchor="middle">' + compacto(s.valor) + '</text>';
+    });
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('aria-label', 'Receita mensal de ' + serie[0].rot + ' a ' + serie[n - 1].rot + '. Maior valor: ' + compacto(serie[iMax].valor) + ' em ' + serie[iMax].rot + '.');
+    svg.innerHTML = saida;
+  }
+
+  function desenhaLista(id, itens) {
+    var total = itens.reduce(function (a, i) { return a + i.valor; }, 0) || 1;
+    var topo = itens.length ? itens[0].valor : 1;
+    el(id).innerHTML = itens.map(function (i) {
+      return '<li><span>' + i.nome + '</span><span class="trilho"><span style="width:' + (i.valor / topo * 100).toFixed(1) + '%"></span></span><span class="num">' + compacto(i.valor) + ' (' + pct(i.valor / total) + ')</span></li>';
+    }).join('');
+  }
+
+  function preencheSelect(id, valorTodos, rotuloTodos, nomes) {
+    var s = el(id);
+    s.innerHTML = '<option value="' + valorTodos + '">' + rotuloTodos + '</option>' +
+      nomes.map(function (n) { return '<option value="' + n + '">' + n + '</option>'; }).join('');
+  }
+  preencheSelect('f-categoria', 'todas', 'Todas as categorias', CATEGORIAS.map(function (c) { return c.nome; }));
+  preencheSelect('f-estado', 'todos', 'Todos os estados', ESTADOS.map(function (x) { return x.nome; }));
+
+  function render() {
+    var N = parseInt(el('f-periodo').value, 10);
+    var cat = el('f-categoria').value, uf = el('f-estado').value;
+    var ini = N_MESES - N, fim = N_MESES - 1;
+    var atual = filtra(ini, fim, cat, uf), ant = filtra(ini - N, ini - 1, cat, uf);
+    var r = resumo(atual), a = resumo(ant);
+
+    el('k-receita').textContent = brl.format(r.receita);
+    el('d-receita').textContent = textoVar(variacao(r.receita, a.receita));
+    el('k-pedidos').textContent = num(r.pedidos);
+    el('d-pedidos').textContent = textoVar(variacao(r.pedidos, a.pedidos));
+    el('k-ticket').textContent = brl.format(r.ticket);
+    el('d-ticket').textContent = textoVar(variacao(r.ticket, a.ticket));
+    el('k-cancel').textContent = pct(r.cancel, 1);
+    var dp = (r.cancel - a.cancel) * 100;
+    el('d-cancel').textContent = (dp >= 0 ? '+' : '−') + num(Math.abs(dp), 1) + ' p.p. vs. período anterior';
+
+    var serie = [];
+    for (var i = ini; i <= fim; i++) {
+      var soMes = resumo(filtra(i, i, cat, uf));
+      serie.push({ rot: rotuloMes(i), valor: soMes.receita });
+    }
+    desenhaMensal(serie);
+    desenhaLista('l-categoria', agrupa(filtra(ini, fim, 'todas', uf), 'cat'));
+    desenhaLista('l-estado', agrupa(filtra(ini, fim, cat, 'todos'), 'uf'));
+
+    var linhas = [];
+    var dRec = variacao(r.receita, a.receita);
+    linhas.push('A receita dos últimos ' + N + ' meses foi de ' + brl.format(r.receita) +
+      (dRec === null ? '.' : ', ' + (dRec >= 0 ? 'um aumento' : 'uma queda') + ' de ' + num(Math.abs(dRec) * 100, 1) + '% sobre os ' + N + ' meses anteriores.'));
+    var porCat = agrupa(atual, 'cat');
+    if (cat === 'todas' && porCat.length > 1) {
+      linhas.push(porCat[0].nome + ' lidera com ' + pct(porCat[0].valor / r.receita) + ' da receita, e ' + porCat[porCat.length - 1].nome + ' é a menor, com ' + pct(porCat[porCat.length - 1].valor / r.receita) + '.');
+    } else {
+      linhas.push('O ticket médio foi de ' + brl.format(r.ticket) + '.');
+    }
+    var iM = 0;
+    serie.forEach(function (s, j) { if (s.valor > serie[iM].valor) iM = j; });
+    linhas.push('O melhor mês foi ' + serie[iM].rot + ', com ' + brl.format(serie[iM].valor) + '.');
+    var txtCancel = 'A taxa de cancelamento foi de ' + pct(r.cancel, 1);
+    if (cat === 'todas') {
+      var pior = null;
+      CATEGORIAS.forEach(function (c) {
+        var rc = resumo(atual.filter(function (p) { return p.cat === c.nome; }));
+        if (rc.total >= 40 && (pior === null || rc.cancel > pior.taxa)) pior = { nome: c.nome, taxa: rc.cancel };
+      });
+      if (pior) txtCancel += ', e é mais alta em ' + pior.nome + ' (' + pct(pior.taxa, 1) + ')';
+    }
+    linhas.push(txtCancel + '.');
+    el('leitura').innerHTML = linhas.map(function (l) { return '<li>' + l + '</li>'; }).join('');
+  }
+
+  ['f-periodo', 'f-categoria', 'f-estado'].forEach(function (id) { el(id).addEventListener('change', render); });
+  var espera;
+  window.addEventListener('resize', function () { clearTimeout(espera); espera = setTimeout(render, 150); });
+  render();
+})();
+</script>
+
+</body>
+</html>
